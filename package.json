@@ -6,7 +6,7 @@
     "author": "Alvaro Martinez de Miguel - Demi <amartinez@hooptap.com> (http://hooptap.com/)",  
     "repository": {
         "type": "git",
-        "url": "https://github.com/liabru/matter-js.git"
+        "url": "https://github.com/demipel8/craftymatter"
       },
     "keywords": [
         "CraftyJS",
