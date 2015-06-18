@@ -184,7 +184,7 @@
 	// generates a debug body from the matter body 
 	function generateDebugBody( body ) {
 
-		var frameUnit = 0.04;
+		var frameUnit = 2;// in pixels
 
 		var debugBody 			= Crafty.e('Actor');
 		var debugBodyBody 		= Crafty.e('Actor, Color');
@@ -211,21 +211,21 @@
 		debugBodyBody.z = debugBody._z + 1;
 
 		debugBodyTopFrame.color('blue');
-		debugBodyTopFrame.h = debugBodyBody._h * frameUnit;
+		debugBodyTopFrame.h = frameUnit;
 		debugBodyTopFrame.z = debugBody._z + 1;
 
 		debugBodyRightFrame.color('blue');
-		debugBodyRightFrame.x = debugBodyBody._x + ( debugBodyBody._w * ( 1 - frameUnit) );
-		debugBodyRightFrame.w = debugBodyBody._w * frameUnit;
+		debugBodyRightFrame.x = debugBodyBody._x + ( debugBodyBody._w - frameUnit );
+		debugBodyRightFrame.w = frameUnit;
 		debugBodyRightFrame.z = debugBody._z + 1;
 
 		debugBodyDownFrame.color('blue');
-		debugBodyDownFrame.y = debugBodyBody._y + ( debugBodyBody._h * ( 1 - frameUnit) );
-		debugBodyDownFrame.h = debugBodyBody._h * frameUnit;
+		debugBodyDownFrame.y = debugBodyBody._y + ( debugBodyBody._h - frameUnit );
+		debugBodyDownFrame.h = frameUnit;
 		debugBodyDownFrame.z = debugBody._z + 1;
 
 		debugBodyLeftFrame.color('blue');
-		debugBodyLeftFrame.w = debugBodyBody._w * frameUnit;
+		debugBodyLeftFrame.w = frameUnit;
 		debugBodyLeftFrame.z = debugBody._z + 1;
 
 		return debugBody;
