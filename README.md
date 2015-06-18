@@ -35,8 +35,11 @@ Crafty.e('2D, DOM, Matter')
 		x : Crafty.viewport.width * 0.45,
 		y : Crafty.viewport.height * 0.1,
 		w : Crafty.viewport.width * 0.1,
-		h : Crafty.viewport.width * 0.1
+		h : Crafty.viewport.width * 0.1,
+		matter : {
+			isStatic : true
+		}
 	});
 ```
 
-It will create a Matter rectangle body with the dimensions in the attr object
+It will create a Matter rectangle body with the dimensions in the attr object. The matter sub-object allows you to set matter specific config to your entity body.
