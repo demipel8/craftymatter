@@ -1,0 +1,32 @@
+{
+    "name": "CraftyMatter",
+    "version": "0.0.1",
+    "license": "MIT",
+    "description": "CraftyJS wrapper for Matter.js, developed at Hooptap",
+    "author": "Alvaro Martinez de Miguel - Demi <amartinez@hooptap.com> (http://hooptap.com/)",  
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/liabru/matter-js.git"
+      },
+    "keywords": [
+        "CraftyJS",
+        "Matter-js",
+        "games",
+        "DOM",
+        "Hooptap",
+        "games"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "~0.4.4",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-uglify": "~0.2.4",
+        "grunt-contrib-jshint": "~0.11.2",
+        "load-grunt-tasks": "~0.1.0",
+        "jshint-stylish": "~2.0.0",
+        "grunt-includes" : "~0.4.5"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    }
+}
