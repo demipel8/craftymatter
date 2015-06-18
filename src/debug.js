@@ -8,8 +8,7 @@ function worldDebug() {
 			y: 0,
 			w: engine.world.bounds.max.x,
 			h: engine.world.bounds.max.y,
-			alpha : 0.5,
-			z: 200
+			alpha : 0.5
 		})
 		.color('green');
 	}
