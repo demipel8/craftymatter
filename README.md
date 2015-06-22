@@ -30,7 +30,7 @@ also highlight the physic world with a light green color.
 ###Component
 
 ```js
-Crafty.e('2D, DOM, Matter')
+Crafty.e( '2D, DOM, Matter' )
 	.attr({
 		x : Crafty.viewport.width * 0.45,
 		y : Crafty.viewport.height * 0.1,
@@ -52,7 +52,7 @@ Objects rotation origin will automatically to center, to fit Matter-js. Changing
 The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly
 
 ```js
-var entity = Crafty.e('2D, DOM, Matter')
+var entity = Crafty.e( '2D, DOM, Matter' )
 	.attr({
 		x : 300,
 		y : 200,

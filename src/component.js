@@ -15,7 +15,7 @@ Crafty.c('Matter', (function() {
 			options = attr.matter;
 		}
 
-		this._body = Bodies.rectangle(attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options);
+		this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
 		this._body.entity = this;
 
 		this.matterMoved = false;
@@ -26,11 +26,11 @@ Crafty.c('Matter', (function() {
 
 
 		if ( !!attr.rotation ) {
-			Body.setAngle(  this._body, Crafty.math.degToRad( attr.rotation ) );
+			Body.setAngle( this._body, Crafty.math.degToRad( attr.rotation ) );
 			//this.matterMoved = true;
 		}
 
-		World.addBody(engine.world, this._body);
+		World.addBody( engine.world, this._body );
 	};
 
     return {
@@ -40,15 +40,15 @@ Crafty.c('Matter', (function() {
 			this.requires( '2D' );
 
 			this.bind('Change', function(attr) {
-				if (!attr) {
+				if ( !attr ) {
 					return;
 				}
-				if (attr.hasOwnProperty('x') && attr.hasOwnProperty('y')) {
+				if ( attr.hasOwnProperty('x') && attr.hasOwnProperty('y') ) {
 					return _newBody.call(this, attr);
 				}
 			}.bind(this));
 
-			this.bind('Move', function(oldAttr) {
+			this.bind('Move', function( oldAttr ) {
 
 				if( !this.matterMoved ) {
 					Matter.Body.setPosition (this._body, {
@@ -61,7 +61,15 @@ Crafty.c('Matter', (function() {
 				
 
 			}.bind(this));
-		}
+		},
+
+		remove: function ( entityDestroyed ) {
+	        World.remove( engine.world, this._body, true );
+
+			if( debug ) {
+				this._debugBody.destroy();
+			}
+	    }
 	};
 
 })());
