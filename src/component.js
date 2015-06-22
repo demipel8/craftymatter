@@ -20,9 +20,7 @@ Crafty.c('Matter', (function() {
 
 		this.matterMoved = false;
 
-		if(debug){
-			this._debugBody = generateDebugBody( this._body );
-		}
+		this._debugBody = debug.generateDebugBody( this._body );
 
 
 		if ( !!attr.rotation ) {
@@ -66,7 +64,7 @@ Crafty.c('Matter', (function() {
 		remove: function ( entityDestroyed ) {
 	        World.remove( engine.world, this._body, true );
 
-			if( debug ) {
+			if( typeof this._debugBody !== "undefined" ) {
 				this._debugBody.destroy();
 			}
 	    }

@@ -33,7 +33,7 @@ Crafty.extend({
   				if( !!_arg ) {
 
   					if( !!_arg.debug ) {
-  						debug = _arg.debug;
+  						debug.debugAllowed = _arg.debug;
   					}
 
   					if( !!_arg.gravity ){
@@ -51,7 +51,7 @@ Crafty.extend({
         		var _mouseConstraint = Matter.MouseConstraint.create(engine);
         		World.add(engine.world, _mouseConstraint);
 
-				worldDebug();
+				debug.worldDebug();
 
 		    	//Update engine every frame
 		    	Crafty.bind('EnterFrame', function( data ) {

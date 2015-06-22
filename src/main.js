@@ -16,7 +16,7 @@
 	var Composite = Matter.Composite;
 	var Vector = Matter.Vector;
 
-	var debug = false;
+	var debug = generateDebug( false );
 
 	var entities = [];
 

@@ -325,10 +325,7 @@ var CraftyRenderer = {};
         entity.matterMoved = true;
         entity.y = part.position.y - ( entity._h / 2 );
 
-        if( debug ) {
-            entity._debugBody.x = entity._x;
-            entity._debugBody.y = entity._y;
-        }
+        debug.moveEntity( entity );
 
         _rotateEntity( entity,  part.angle );
 
@@ -344,9 +341,7 @@ var CraftyRenderer = {};
             
         entity.rotation = Crafty.math.radToDeg( angle );
 
-        if( debug ) {
-             entity._debugBody.rotation = Crafty.math.radToDeg( angle );
-        }
+        debug.rotateEntity( [ entity, angle] );
     };
 
 })(CraftyRenderer);
