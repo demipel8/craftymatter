@@ -46,3 +46,19 @@ Crafty.e('2D, DOM, Matter')
 It will create a Matter rectangle body with the dimensions in the attr object. The matter sub-object allows you to set matter specific config to your entity body.
 
 Objects rotation origin will automatically to center, to fit Matter-js. Changing the origin will give unexpected results.
+
+###Modify matter directly
+
+The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly
+
+```js
+var entity = Crafty.e('2D, DOM, Matter')
+	.attr({
+		x : 300,
+		y : 200,
+		w : 100,
+		h : 100,
+	});
+
+Matter.Body.setAngle( entity._body, Crafty.math.degToRad( 90 ) );
+```
