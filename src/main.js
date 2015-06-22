@@ -11,7 +11,10 @@
 	var World = Matter.World;
 	var Engine = Matter.Engine;
 	var Bodies = Matter.Bodies;
+	var Body = Matter.Body;
 	var Common = Matter.Common;
+	var Composite = Matter.Composite;
+	var Vector = Matter.Vector;
 
 	var debug = false;
 
