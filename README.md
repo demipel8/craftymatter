@@ -36,6 +36,7 @@ Crafty.e('2D, DOM, Matter')
 		y : Crafty.viewport.height * 0.1,
 		w : Crafty.viewport.width * 0.1,
 		h : Crafty.viewport.width * 0.1,
+		rotation : 15,
 		matter : {
 			isStatic : true
 		}
@@ -43,3 +44,5 @@ Crafty.e('2D, DOM, Matter')
 ```
 
 It will create a Matter rectangle body with the dimensions in the attr object. The matter sub-object allows you to set matter specific config to your entity body.
+
+Objects rotation origin will automatically to center, to fit Matter-js. Changing the origin will give unexpected results.
