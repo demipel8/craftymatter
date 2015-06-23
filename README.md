@@ -1,12 +1,26 @@
-#craftyMatter
+# craftyMatter
 
 > Crafty Wrapper for Matter.js physics library
 
-##install 
+## install 
 
-##Usage
+Install the required packages:
 
-###Init matter
+```js
+npm install craftyjs matter-js crafty-matter
+```
+Load the script on your HTML file:
+
+```html
+<script type="text/javascript" src="../path/to/craftyjs"></script>
+<script type="text/javascript" src="../path/to/matter-js"></script>
+<script type="text/javascript" src="../path/to/crafty-matter"></script>
+```
+And you're ready to go!
+
+## Usage
+
+### Init matter
 
 Launch `Crafty.Matter.Init` passing an options object [optional].
 
@@ -27,7 +41,7 @@ also highlight the physic world with a light green color.
 
 *gravity*: by default { x: 0, y: 0 }
 
-###Component
+### Component
 
 ```js
 Crafty.e( '2D, DOM, Matter' )
@@ -47,7 +61,7 @@ It will create a Matter rectangle body with the dimensions in the attr object. T
 
 Objects rotation origin will automatically to center, to fit Matter-js. Changing the origin will give unexpected results.
 
-###Modify matter directly
+### Modify matter directly
 
 The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly
 
