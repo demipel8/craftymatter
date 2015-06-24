@@ -9,6 +9,10 @@ Install the required packages:
 ```js
 npm install craftyjs matter-js crafty-matter
 ```
+
+* temporary fix * : Do to working with the edge build version of matter I had to make a couple fixes. So the 
+recommended matter lib version is on the `libs` folder.
+
 Load the script on your HTML file:
 
 ```html
@@ -80,7 +84,7 @@ Crafty.e('Actor, Matter, circleSprite')
 		}
 	});
 ```
-if `radius` property is no specified. It will use the `w` property divided by 2.
+If `radius` property is no specified. It will use the `w` property divided by 2.
 
 ### Modify matter directly
 
@@ -110,3 +114,10 @@ Matter.World.add(
 	})
 );
 ```
+
+## TODO
+
+- Demo
+- Bodies.polygon
+- Bodies.trapezoid
+- Bodies.fromVertices

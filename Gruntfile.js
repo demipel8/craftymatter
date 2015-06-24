@@ -30,7 +30,8 @@ module.exports = function (grunt) {
             },
             my_target: {
                 files: {
-                    'build/craftymatter.min.js': ['build/craftymatter.js']
+                    'build/craftymatter.min.js': ['build/craftymatter.js'],
+                    'libs/matter.min.js': ['libs/matter.js'],
                 }
             }
         }
