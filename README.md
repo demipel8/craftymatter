@@ -47,6 +47,8 @@ also highlight the physic world with a light green color.
 
 *size*: matter world size. by default { x: Crafty.viewport.width, y: Crafty.viewport.height }
 
+*hasBounds*: set the drawing view region to the bounds object.
+
 ### Component
 
 ```js

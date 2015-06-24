@@ -18,6 +18,7 @@ Crafty.extend({
 				        options: {
 				        	width: Crafty.viewport.width,
             				height: Crafty.viewport.height,
+            				hasBounds: _arg.hasBounds || false,
             				showDebug: false
 				        }
 				    },

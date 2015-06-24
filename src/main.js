@@ -15,6 +15,7 @@
 	var Common = Matter.Common;
 	var Composite = Matter.Composite;
 	var Vector = Matter.Vector;
+	var Bounds = Matter.Bounds;
 
 	var debug = generateDebug( false );
 
