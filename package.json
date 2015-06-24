@@ -1,6 +1,6 @@
 {
     "name": "crafty-matter",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "MIT",
     "description": "CraftyJS wrapper for Matter.js, developed at Hooptap",
     "author": "Alvaro Martinez de Miguel - Demi <amartinez@hooptap.com> (http://hooptap.com/)",  
