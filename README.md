@@ -63,6 +63,25 @@ It will create a Matter rectangle body with the dimensions in the attr object. T
 
 Objects rotation origin will automatically to center, to fit Matter-js. Changing the origin will give unexpected results.
 
+### Circle
+
+```js
+Crafty.sprite(100, 100, 'path/to/image.extension', { circleSprite : [0, 0] } } );
+
+Crafty.e('Actor, Matter, circleSprite')
+	.attr({
+		x : Crafty.viewport.width * 0.8625,
+		y : Crafty.viewport.height * 0.1,
+		w : 100,
+		h : 100,
+		matter : {
+			shape : 'circle',
+			radius : 50
+		}
+	});
+```
+if `radius` property is no specified. It will use the `w` property divided by 2.
+
 ### Modify matter directly
 
 The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly.
