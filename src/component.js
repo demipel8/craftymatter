@@ -16,7 +16,13 @@ Crafty.c('Matter', (function() {
 		}
 
 		if(!!options.shape && options.shape === 'circle' ) {
-			this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.matter.radius, options );
+			var radius = attr.w / 2;
+
+			if( !!attr.matter.radius ) {
+				radius = attr.matter.radius;
+			}
+
+			this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), radius, options );
 
 		} else {
 			this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
