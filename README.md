@@ -10,7 +10,7 @@ Install the required packages:
 npm install craftyjs matter-js crafty-matter
 ```
 
-* temporary fix * : Do to working with the edge build version of matter I had to make a couple fixes. So the 
+*temporary fix* : Do to working with the edge build version of matter I had to make a couple fixes. So the 
 recommended matter lib version is on the `libs` folder.
 
 Load the script on your HTML file:
