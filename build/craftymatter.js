@@ -19,6 +19,7 @@
 	var debug = generateDebug( false );
 
 	var entities = [];
+	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
 	/**
@@ -158,7 +159,10 @@
 	        //move bodies
 	        Render.bodies( engine, bodies );
 
-	        //Render.constraints(constraints);
+	        //Only show constraints when debug is active
+	        if( debug.debugAllowed ) {
+	            Render.constraints( constraints );
+	        }
 
 	        if (options.showDebug) {
 	            Render.debug(engine);
@@ -239,35 +243,59 @@
 	     * @param {constraint[]} constraints
 	     * @param {RenderingContext} context
 	     */
-	    Render.constraints = function(constraints, context) {
-	        var c = context;
+	    Render.constraints = function( constraints ) {
+	        var constraint;
+	        var bodyA;
+	        var bodyB;
+	        var pointToGo;
 
-	        for (var i = 0; i < constraints.length; i++) {
-	            var constraint = constraints[i];
+	        for ( var i = 0; i < constraints.length; i++ ) {
+	            constraint = constraints[i];
 
-	            if (!constraint.render.visible || !constraint.pointA || !constraint.pointB)
+	            if ( !constraint.render.visible || !constraint.pointA || !constraint.pointB ) {
 	                continue;
-
-	            var bodyA = constraint.bodyA,
-	                bodyB = constraint.bodyB;
-
-	            if (bodyA) {
-	                c.beginPath();
-	                c.moveTo(bodyA.position.x + constraint.pointA.x, bodyA.position.y + constraint.pointA.y);
-	            } else {
-	                c.beginPath();
-	                c.moveTo(constraint.pointA.x, constraint.pointA.y);
 	            }
 
-	            if (bodyB) {
-	                c.lineTo(bodyB.position.x + constraint.pointB.x, bodyB.position.y + constraint.pointB.y);
+	            if ( !constraint.entity ) {
+	               constraint.entity = Crafty.e( RenderingMode + ', Color')
+	                .color( 'white' );
+	            } 
+
+	            constraint.entity.h = Crafty.viewport.height * 0.005;
+
+	            bodyA = constraint.bodyA;
+	            bodyB = constraint.bodyB;
+
+
+	            if ( bodyA ) {
+	                constraint.entity.x = bodyA.position.x + constraint.pointA.x;
+	                constraint.entity.y = bodyA.position.y + constraint.pointA.y;
 	            } else {
-	                c.lineTo(constraint.pointB.x, constraint.pointB.y);
+	                constraint.entity.x = constraint.pointA.x;
+	                constraint.entity.y = constraint.pointA.y;
 	            }
 
-	            c.lineWidth = constraint.render.lineWidth;
-	            c.strokeStyle = constraint.render.strokeStyle;
-	            c.stroke();
+	            if ( bodyB ) {
+	                pointToGo = {
+	                    x : bodyB.position.x + constraint.pointB.x,
+	                    y : bodyB.position.y + constraint.pointB.y
+	                };
+	            } else {
+	                pointToGo = {
+	                    x : constraint.pointB.x,
+	                    y : constraint.pointB.y
+	                };
+	            }
+
+	            constraint.entity.w = _getWidth( {
+	                x : constraint.entity._x,
+	                y : constraint.entity._y
+	            }, pointToGo );
+
+	            constraint.entity.rotation = _getAngle( {
+	                x : constraint.entity._x,
+	                y : constraint.entity._y
+	            }, pointToGo );
 	        }
 	    };
 	    
@@ -342,11 +370,16 @@
 	            entity.alpha = 0.5;
 	        }
 
-	        entity.matterMoved = true;
-	        entity.x = part.position.x - ( entity._w / 2 );
+	        if( entity._x !== part.position.x - ( entity._w / 2 ) ) {
+	            entity.matterMoved = true;
+	            entity.x = part.position.x - ( entity._w / 2 );
+	        }
 
-	        entity.matterMoved = true;
-	        entity.y = part.position.y - ( entity._h / 2 );
+	        if( entity._y !== part.position.y - ( entity._h / 2 ) ) {
+	            entity.matterMoved = true;
+	            entity.y = part.position.y - ( entity._h / 2 );
+	        }
+	        
 
 	        debug.moveEntity( entity );
 
@@ -354,17 +387,54 @@
 
 	    };
 
-	    //initial support only for top left origin
+	    //initial support only for center origin
 	    var _rotateEntity = function( entity, angle ) {
-	        entity.rotation = 0;
 
-	        if(angle === 0) {
+	        var angleFixed = Crafty.math.radToDeg( angle ).toFixed( 3 );
+	        
+	        if( angle === 0 || entity._rotation === angleFixed ) {
 	            return;
 	        }
-	            
-	        entity.rotation = Crafty.math.radToDeg( angle );
+	        
+	        entity.matterMoved = true;
+	        entity.rotation = angleFixed;
 
-	        debug.rotateEntity( [ entity, angle] );
+	        debug.rotateEntity( [ entity, angleFixed] );
+	    };
+
+	    /**
+	     * Calculate the distance between two points
+	     * @param  {Vector} pointA 
+	     * @param  {Vector} pointB 
+	     * @return {number}        distance between two points
+	     */
+	    var _getWidth = function( pointA, pointB ) {
+
+	        var vector = _getVector( pointA, pointB );
+	        return Vector.magnitude( vector );
+	    };
+
+	    /**
+	     * Calculate the angle between a vector and the x axis
+	     * @param  {Vector} pointA - vector origin
+	     * @param  {Vector} pointB - vector point
+	     * @return {number}        angle between the vector and the x axis
+	     */
+	    var _getAngle = function( pointA, pointB ) {
+
+	        var vector = _getVector( pointA, pointB );
+	        return - Crafty.math.radToDeg( Math.atan2( vector.y, vector.x ) ).toFixed( 3 );
+	    };
+
+	    /**
+	     * Creates a vector given its origin and destiny points
+	     * @param  {Vector} pointA - vector origin
+	     * @param  {Vector} pointB - vector point
+	     * @return {Vector}        Resulting vector
+	     */
+	    var _getVector = function( pointA, pointB ) {
+
+	        return Vector.create( pointB.x - pointA.x, - ( pointB.y - pointA.y ) );
 	    };
 
 	})(CraftyRenderer);
@@ -410,16 +480,17 @@
 	  						engine.world.gravity = _arg.gravity;
 	  					}
 
+	  					if( !!_arg.size ){
+	  						engine.world.bounds.max = {
+								x: _arg.size.x,
+								y: _arg.size.y
+							}; 
+	  					}
+
+	  					if( !!_arg.renderingMode && _arg.renderingMode === 'Canvas' ) {
+	  						RenderingMode = '2D, Canvas';
+	  					}
 	  				}
-
-					engine.world.bounds.max = {
-						x: Crafty.viewport.width,
-						y: Crafty.viewport.height
-					}; 
-
-					// add a mouse controlled constraint
-	        		var _mouseConstraint = Matter.MouseConstraint.create(engine);
-	        		World.add(engine.world, _mouseConstraint);
 
 					debug.worldDebug();
 
@@ -430,9 +501,16 @@
 						Engine.render(engine);
 						Matter.Events.trigger(engine, 'afterTick', event);
 				    });
+
+			    	this.engine = engine;
+				    this.world = engine.world;
 			    },
 
-			    destroy: function() {}
+			    destroy: function() {},
+
+		    	engine: {},
+		    
+		    	world: {}
 	  		};
 	  	})()
 	});
@@ -454,7 +532,13 @@
 				options = attr.matter;
 			}
 
-			this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+			if(!!options.shape && options.shape === 'circle' ) {
+				this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.matter.radius, options );
+
+			} else {
+				this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+			}
+
 			this._body.entity = this;
 
 			this.matterMoved = false;
@@ -487,11 +571,25 @@
 
 				this.bind('Move', function( oldAttr ) {
 
-					if( !this.matterMoved ) {
-						Matter.Body.setPosition (this._body, {
+					if( !this.matterMoved && typeof this._body !== 'undefined' ) {
+						Body.setPosition (this._body, {
 							x: this._x + this._w / 2,
 							y: this._y + this._h / 2
 						});
+
+					} else {
+						this.matterMoved = false;
+					}
+					
+
+				}.bind(this));
+
+				this.bind('Rotate', function( rotation ) {
+
+					if( !this.matterMoved ) {
+
+						Body.setAngle (this._body, Crafty.math.degToRad( this.rotation ) );
+
 					} else {
 						this.matterMoved = false;
 					}
@@ -517,7 +615,7 @@
 
 		// Creates a rectangle filling the Matter world area
 		function worldDebug() {
-			Crafty.e('Actor, Color')
+			Crafty.e( RenderingMode + ', Color' )
 				.attr({
 				x: 0,
 				y: 0,
@@ -533,24 +631,51 @@
 
 			var frameUnit = 2;// in pixels
 
-			var debugBody 			= Crafty.e('Actor');
-			var debugBodyBody 		= Crafty.e('Actor, Color');
-			var debugBodyTopFrame 	= Crafty.e('Actor, Color');
-			var debugBodyRightFrame = Crafty.e('Actor, Color');
-			var debugBodyDownFrame 	= Crafty.e('Actor, Color');
-			var debugBodyLeftFrame 	= Crafty.e('Actor, Color');
+			var debugBody 			= Crafty.e( RenderingMode );
+			var debugBodyBody 		= Crafty.e( RenderingMode + ', Color' );
+			var debugBodyTopFrame 	= Crafty.e( RenderingMode + ', Color' );
+			var debugBodyRightFrame = Crafty.e( RenderingMode + ', Color' );
+			var debugBodyDownFrame 	= Crafty.e( RenderingMode + ', Color' );
+			var debugBodyLeftFrame 	= Crafty.e( RenderingMode + ', Color' );
 
-			debugBody.attach(debugBodyBody);
-			debugBody.attach(debugBodyTopFrame);
-			debugBody.attach(debugBodyRightFrame);
-			debugBody.attach(debugBodyDownFrame);
-			debugBody.attach(debugBodyLeftFrame);
+			debugBody.attach( debugBodyBody );
+			debugBody.attach( debugBodyTopFrame );
+			debugBody.attach( debugBodyRightFrame );
+			debugBody.attach( debugBodyDownFrame );
+			debugBody.attach( debugBodyLeftFrame );
 
-			debugBody.attr({
+			//TODO cleaner code.
+			var attr = {
 				x: body.vertices[0].x,
 				y: body.vertices[0].y,
-				w: body.vertices[2].x - body.vertices[0].x,
-				h: body.vertices[2].y - body.vertices[0].y
+				w: body.vertices[0].x,
+				h: body.vertices[0].y
+			};
+
+			//we iterate ho have a square shape for circles and poligons
+			for (var i = 1; i < body.vertices.length; i++) {
+				if( body.vertices[i].x < attr.x) {
+					attr.x = body.vertices[i].x;
+				}
+
+				if( body.vertices[i].y < attr.y) {
+					attr.y = body.vertices[i].y;
+				} 
+
+				if( body.vertices[i].x > attr.w) {
+					attr.w = body.vertices[i].x;
+				} 
+
+				if( body.vertices[i].y > attr.h) {
+					attr.h = body.vertices[i].y;
+				} 
+			}
+
+			debugBody.attr({
+				x: attr.x,
+				y: attr.y,
+				w: Math.abs( attr.w - attr.x ),
+				h: Math.abs( attr.h - attr.y )
 			});
 
 			debugBody.origin( 'center' );
@@ -593,7 +718,7 @@
 
 		function rotateEntity( params ) { //params[0] -> entity, params[1] -> angle
 
-	        params[0]._debugBody.rotation = Crafty.math.radToDeg( params[1] );
+	        params[0]._debugBody.rotation =  params[1];
 		}
 
 

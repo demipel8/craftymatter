@@ -19,6 +19,7 @@
 	var debug = generateDebug( false );
 
 	var entities = [];
+	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
 	include "renderer.js"

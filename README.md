@@ -41,6 +41,8 @@ also highlight the physic world with a light green color.
 
 *gravity*: by default { x: 0, y: 0 }
 
+*size*: matter world size. by default { x: Crafty.viewport.width, y: Crafty.viewport.height }
+
 ### Component
 
 ```js
@@ -63,7 +65,7 @@ Objects rotation origin will automatically to center, to fit Matter-js. Changing
 
 ### Modify matter directly
 
-The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly
+The matter body reference for an entity with the `Matter` component will be the property `_body`. Use it to apply matter changes directly.
 
 ```js
 var entity = Crafty.e( '2D, DOM, Matter' )
@@ -75,4 +77,17 @@ var entity = Crafty.e( '2D, DOM, Matter' )
 	});
 
 Matter.Body.setAngle( entity._body, Crafty.math.degToRad( 90 ) );
+```
+
+Also the `Crafty.Matter` contains a reference to `engine` and `world` matter components.
+
+```js
+
+Matter.World.add( 
+	Crafty.Matter.world, 
+	Matter.Constraint.create({
+	    pointA: { x: 300, y: 100 },
+	    bodyB: entity._body
+	})
+);
 ```

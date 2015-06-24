@@ -40,16 +40,17 @@ Crafty.extend({
   						engine.world.gravity = _arg.gravity;
   					}
 
+  					if( !!_arg.size ){
+  						engine.world.bounds.max = {
+							x: _arg.size.x,
+							y: _arg.size.y
+						}; 
+  					}
+
+  					if( !!_arg.renderingMode && _arg.renderingMode === 'Canvas' ) {
+  						RenderingMode = '2D, Canvas';
+  					}
   				}
-
-				engine.world.bounds.max = {
-					x: Crafty.viewport.width,
-					y: Crafty.viewport.height
-				}; 
-
-				// add a mouse controlled constraint
-        		var _mouseConstraint = Matter.MouseConstraint.create(engine);
-        		World.add(engine.world, _mouseConstraint);
 
 				debug.worldDebug();
 
@@ -60,9 +61,16 @@ Crafty.extend({
 					Engine.render(engine);
 					Matter.Events.trigger(engine, 'afterTick', event);
 			    });
+
+		    	this.engine = engine;
+			    this.world = engine.world;
 		    },
 
-		    destroy: function() {}
+		    destroy: function() {},
+
+	    	engine: {},
+	    
+	    	world: {}
   		};
   	})()
 });

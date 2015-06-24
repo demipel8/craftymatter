@@ -4,7 +4,7 @@ function generateDebug( debugAllowed ) {
 
 	// Creates a rectangle filling the Matter world area
 	function worldDebug() {
-		Crafty.e('Actor, Color')
+		Crafty.e( RenderingMode + ', Color' )
 			.attr({
 			x: 0,
 			y: 0,
@@ -20,24 +20,51 @@ function generateDebug( debugAllowed ) {
 
 		var frameUnit = 2;// in pixels
 
-		var debugBody 			= Crafty.e('Actor');
-		var debugBodyBody 		= Crafty.e('Actor, Color');
-		var debugBodyTopFrame 	= Crafty.e('Actor, Color');
-		var debugBodyRightFrame = Crafty.e('Actor, Color');
-		var debugBodyDownFrame 	= Crafty.e('Actor, Color');
-		var debugBodyLeftFrame 	= Crafty.e('Actor, Color');
+		var debugBody 			= Crafty.e( RenderingMode );
+		var debugBodyBody 		= Crafty.e( RenderingMode + ', Color' );
+		var debugBodyTopFrame 	= Crafty.e( RenderingMode + ', Color' );
+		var debugBodyRightFrame = Crafty.e( RenderingMode + ', Color' );
+		var debugBodyDownFrame 	= Crafty.e( RenderingMode + ', Color' );
+		var debugBodyLeftFrame 	= Crafty.e( RenderingMode + ', Color' );
 
-		debugBody.attach(debugBodyBody);
-		debugBody.attach(debugBodyTopFrame);
-		debugBody.attach(debugBodyRightFrame);
-		debugBody.attach(debugBodyDownFrame);
-		debugBody.attach(debugBodyLeftFrame);
+		debugBody.attach( debugBodyBody );
+		debugBody.attach( debugBodyTopFrame );
+		debugBody.attach( debugBodyRightFrame );
+		debugBody.attach( debugBodyDownFrame );
+		debugBody.attach( debugBodyLeftFrame );
 
-		debugBody.attr({
+		//TODO cleaner code.
+		var attr = {
 			x: body.vertices[0].x,
 			y: body.vertices[0].y,
-			w: body.vertices[2].x - body.vertices[0].x,
-			h: body.vertices[2].y - body.vertices[0].y
+			w: body.vertices[0].x,
+			h: body.vertices[0].y
+		};
+
+		//we iterate ho have a square shape for circles and poligons
+		for (var i = 1; i < body.vertices.length; i++) {
+			if( body.vertices[i].x < attr.x) {
+				attr.x = body.vertices[i].x;
+			}
+
+			if( body.vertices[i].y < attr.y) {
+				attr.y = body.vertices[i].y;
+			} 
+
+			if( body.vertices[i].x > attr.w) {
+				attr.w = body.vertices[i].x;
+			} 
+
+			if( body.vertices[i].y > attr.h) {
+				attr.h = body.vertices[i].y;
+			} 
+		}
+
+		debugBody.attr({
+			x: attr.x,
+			y: attr.y,
+			w: Math.abs( attr.w - attr.x ),
+			h: Math.abs( attr.h - attr.y )
 		});
 
 		debugBody.origin( 'center' );
@@ -80,7 +107,7 @@ function generateDebug( debugAllowed ) {
 
 	function rotateEntity( params ) { //params[0] -> entity, params[1] -> angle
 
-        params[0]._debugBody.rotation = Crafty.math.radToDeg( params[1] );
+        params[0]._debugBody.rotation =  params[1];
 	}
 
 

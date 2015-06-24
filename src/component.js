@@ -15,7 +15,13 @@ Crafty.c('Matter', (function() {
 			options = attr.matter;
 		}
 
-		this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+		if(!!options.shape && options.shape === 'circle' ) {
+			this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.matter.radius, options );
+
+		} else {
+			this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+		}
+
 		this._body.entity = this;
 
 		this.matterMoved = false;
@@ -48,11 +54,25 @@ Crafty.c('Matter', (function() {
 
 			this.bind('Move', function( oldAttr ) {
 
-				if( !this.matterMoved ) {
-					Matter.Body.setPosition (this._body, {
+				if( !this.matterMoved && typeof this._body !== 'undefined' ) {
+					Body.setPosition (this._body, {
 						x: this._x + this._w / 2,
 						y: this._y + this._h / 2
 					});
+
+				} else {
+					this.matterMoved = false;
+				}
+				
+
+			}.bind(this));
+
+			this.bind('Rotate', function( rotation ) {
+
+				if( !this.matterMoved ) {
+
+					Body.setAngle (this._body, Crafty.math.degToRad( this.rotation ) );
+
 				} else {
 					this.matterMoved = false;
 				}
