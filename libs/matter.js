@@ -180,6 +180,40 @@ var Body = {};
             body.motion = 0;
         }
     };
+    /**
+     * Sets the mass of the body. Inverse mass and density are automatically updated to reflect the change.
+     * @method setMass
+     * @param {body} body
+     * @param {number} mass
+     */
+    Body.setMass = function(body, mass) {
+        body.mass = mass;
+        body.inverseMass = 1 / body.mass;
+        body.density = body.mass / body.area;
+    };
+
+    /**
+     * Sets the density of the body. Mass is automatically updated to reflect the change.
+     * @method setDensity
+     * @param {body} body
+     * @param {number} density
+     */
+    Body.setDensity = function(body, density) {
+        Body.setMass(body, density * body.area);
+        body.density = density;
+    };
+
+    /**
+     * Sets the moment of inertia (i.e. second moment of area) of the body of the body. 
+     * Inverse inertia is automatically updated to reflect the change. Mass is not changed.
+     * @method setInertia
+     * @param {body} body
+     * @param {number} inertia
+     */
+    Body.setInertia = function(body, inertia) {
+        body.inertia = inertia;
+        body.inverseInertia = 1 / body.inertia;
+    };
 
     /**
      * Sets the body's vertices and updates body properties accordingly, including inertia, area and mass (with respect to `body.density`).
