@@ -8,14 +8,16 @@
 	var engine;
 
 	//Matter variables
-	var World = Matter.World;
-	var Engine = Matter.Engine;
-	var Bodies = Matter.Bodies;
-	var Body = Matter.Body;
-	var Common = Matter.Common;
-	var Composite = Matter.Composite;
-	var Vector = Matter.Vector;
-	var Bounds = Matter.Bounds;
+	var Bodies		= Matter.Bodies;
+	var Body		= Matter.Body;
+	var Bounds		= Matter.Bounds;
+	var Common		= Matter.Common;
+	var Composite 	= Matter.Composite;
+	var Engine 		= Matter.Engine;
+	var Events 		= Matter.Events;
+	var Mouse 		= Matter.Mouse;
+	var Vector 		= Matter.Vector;
+	var World 		= Matter.World;
 
 	var debug = generateDebug( false );
 
@@ -23,6 +25,7 @@
 	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
+	include "engine.js"
 	include "renderer.js"
 	include "namespaceExtension.js"
 	include "component.js"

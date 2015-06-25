@@ -8,14 +8,16 @@
 	var engine;
 
 	//Matter variables
-	var World = Matter.World;
-	var Engine = Matter.Engine;
-	var Bodies = Matter.Bodies;
-	var Body = Matter.Body;
-	var Common = Matter.Common;
-	var Composite = Matter.Composite;
-	var Vector = Matter.Vector;
-	var Bounds = Matter.Bounds;
+	var Bodies		= Matter.Bodies;
+	var Body		= Matter.Body;
+	var Bounds		= Matter.Bounds;
+	var Common		= Matter.Common;
+	var Composite 	= Matter.Composite;
+	var Engine 		= Matter.Engine;
+	var Events 		= Matter.Events;
+	var Mouse 		= Matter.Mouse;
+	var Vector 		= Matter.Vector;
+	var World 		= Matter.World;
 
 	var debug = generateDebug( false );
 
@@ -23,6 +25,85 @@
 	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
+	Engine.run = function( engine, time ) {
+
+		if ( !engine.enabled ) {
+	        return;
+		}
+
+		Events.trigger(engine, 'beforeTick', event);
+		Events.trigger(engine, 'tick', event);
+	    Engine.update(engine, time.dt, 1);
+
+	    // trigger events that may have occured during the step
+	    _triggerCollisionEvents(engine);
+	    _triggerMouseEvents(engine);
+
+	    //render
+		Engine.render( engine );
+
+		Events.trigger( engine, 'afterTick', event );
+	};
+
+	/**
+	     * Triggers mouse events
+	     * @method _triggerMouseEvents
+	     * @private
+	     * @param {engine} engine
+	     */
+	    var _triggerMouseEvents = function(engine) {
+	        var mouse = engine.input.mouse,
+	            mouseEvents = mouse.sourceEvents;
+
+	        if (mouseEvents.mousemove) {
+	            Events.trigger(engine, 'mousemove', {
+	                mouse: mouse
+	            });
+	        }
+
+	        if (mouseEvents.mousedown) {
+	            Events.trigger(engine, 'mousedown', {
+	                mouse: mouse
+	            });
+	        }
+
+	        if (mouseEvents.mouseup) {
+	            Events.trigger(engine, 'mouseup', {
+	                mouse: mouse
+	            });
+	        }
+
+	        // reset the mouse state ready for the next step
+	        Mouse.clearSourceEvents(mouse);
+	    };
+
+	    /**
+	     * Triggers collision events
+	     * @method _triggerMouseEvents
+	     * @private
+	     * @param {engine} engine
+	     */
+	    var _triggerCollisionEvents = function(engine) {
+	        var pairs = engine.pairs;
+
+	        if (pairs.collisionStart.length > 0) {
+	            Events.trigger(engine, 'collisionStart', {
+	                pairs: pairs.collisionStart
+	            });
+	        }
+
+	        if (pairs.collisionActive.length > 0) {
+	            Events.trigger(engine, 'collisionActive', {
+	                pairs: pairs.collisionActive
+	            });
+	        }
+
+	        if (pairs.collisionEnd.length > 0) {
+	            Events.trigger(engine, 'collisionEnd', {
+	                pairs: pairs.collisionEnd
+	            });
+	        }
+	    };
 	/**
 	 * CraftyJS custom Matter-js renderer. adapted from their standard renderer
 	 */
@@ -498,10 +579,9 @@
 
 			    	//Update engine every frame
 			    	Crafty.bind('EnterFrame', function( data ) {
-			    		Matter.Events.trigger(engine, 'beforeTick', event);
-				        Engine.update(engine, data.dt, 1);
-						Engine.render(engine);
-						Matter.Events.trigger(engine, 'afterTick', event);
+			    		
+			    		//Custom Engine.Run function
+						Engine.run( engine, data );
 				    });
 
 			    	this.engine = engine;

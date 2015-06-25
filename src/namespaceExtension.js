@@ -57,10 +57,9 @@ Crafty.extend({
 
 		    	//Update engine every frame
 		    	Crafty.bind('EnterFrame', function( data ) {
-		    		Matter.Events.trigger(engine, 'beforeTick', event);
-			        Engine.update(engine, data.dt, 1);
-					Engine.render(engine);
-					Matter.Events.trigger(engine, 'afterTick', event);
+		    		
+		    		//Custom Engine.Run function
+					Engine.run( engine, data );
 			    });
 
 		    	this.engine = engine;
