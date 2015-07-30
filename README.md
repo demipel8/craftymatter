@@ -2,6 +2,8 @@
 
 > Crafty Wrapper for Matter.js physics library
 
+**Try the [Demo](https://craftymatter.herokuapp.com/)!** 
+
 ## install 
 
 Install the required packages:
@@ -119,9 +121,7 @@ Matter.World.add(
 
 ## TODO
 
-- Add label to attr options
-- make optional some of the attr options on creation 
-- Demo
+- Finish Demo
 - Bodies.polygon
 - Bodies.trapezoid
 - Bodies.fromVertices
