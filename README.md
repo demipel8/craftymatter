@@ -119,6 +119,8 @@ Matter.World.add(
 
 ## TODO
 
+- Add label to attr options
+- make optional some of the attr options on creation 
 - Demo
 - Bodies.polygon
 - Bodies.trapezoid

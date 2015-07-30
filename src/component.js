@@ -6,7 +6,14 @@ Crafty.c('Matter', (function() {
 
 	var _newBody = function _newBody( attr ) {
 
-		this.origin( ( attr.w / 2 ), ( attr.h / 2 ) );
+        var coords = {
+            x : attr.x || 0,
+            y : attr.y || 0,
+            w : attr.w || 0,
+            h : attr.h || 0
+        };
+
+		this.origin( ( coords.w / 2 ), ( coords.h / 2 ) );
 
 		entities.push(this);
 
@@ -16,16 +23,17 @@ Crafty.c('Matter', (function() {
 		}
 
 		if(!!options.shape && options.shape === 'circle' ) {
-			var radius = attr.w / 2;
+			var radius = coords.w / 2;
 
 			if( !!attr.matter.radius ) {
 				radius = attr.matter.radius;
 			}
 
-			this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), radius, options );
+			this._body = Bodies.circle( coords.x + ( coords.w / 2 ), coords.y + ( coords.h / 2 ), radius, options );
 
 		} else {
-			this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+
+			this._body = Bodies.rectangle( coords.x + ( coords.w / 2 ), coords.y + ( coords.h / 2 ), coords.w, coords.h, options );
 		}
 
 		this._body.entity = this;
@@ -37,7 +45,6 @@ Crafty.c('Matter', (function() {
 
 		if ( !!attr.rotation ) {
 			Body.setAngle( this._body, Crafty.math.degToRad( attr.rotation ) );
-			//this.matterMoved = true;
 		}
 
 		World.addBody( engine.world, this._body );

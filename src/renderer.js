@@ -288,7 +288,7 @@ var CraftyRenderer = {};
         var body;
         var entity;
         var i;
-        var moveEntity;
+        var k;
 
         for ( i = 0; i < bodies.length; i++ ) {
             body = bodies[i];
