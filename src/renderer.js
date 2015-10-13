@@ -400,7 +400,7 @@ var CraftyRenderer = {};
      */
     var _getVector = function( pointA, pointB ) {
 
-        return Vector.create( pointB.x - pointA.x, -( pointB.y - pointA.y ) );
+        return { x: pointB.x - pointA.x, y: -( pointB.y - pointA.y ) };
     };
 
 } )( CraftyRenderer );
