@@ -22,7 +22,7 @@
 	var debug = generateDebug( false );
 
 	var entities = [];
-	var RenderingMode = '2D, DOM';
+	var RenderingMode = '2D, Canvas';
 
 	/* jshint ignore:start */
 	include "engine.js"
