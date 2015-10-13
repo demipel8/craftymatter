@@ -16,6 +16,7 @@
     "Hooptap",
     "games"
   ],
+  "main": "build/craftymatter.js",
   "dependencies": {},
   "devDependencies": {
     "ejs": "^2.3.3",
