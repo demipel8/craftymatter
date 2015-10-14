@@ -22,7 +22,7 @@
 	var debug = generateDebug( false );
 
 	var entities = [];
-	var RenderingMode = '2D, DOM';
+	var RenderingMode = '2D, Canvas';
 
 	/* jshint ignore:start */
 	Engine.run = function( engine, time ) {
@@ -537,7 +537,7 @@
 							}
 						},
 						world: {
-							bounds: {
+							bounds: _arg.bounds || {
 								min: { x: 0, y: 0},
 								max: { x: Crafty.viewport.width, y: Crafty.viewport.height }
 							}
@@ -699,10 +699,10 @@
 		function worldDebug() {
 			Crafty.e( RenderingMode + ', Color' )
 				.attr( {
-				x: 0,
-				y: 0,
-				w: engine.world.bounds.max.x,
-				h: engine.world.bounds.max.y,
+				x: engine.world.bounds.min.x,
+				y: engine.world.bounds.min.y,
+				w: engine.world.bounds.max.x - engine.world.bounds.min.x,
+				h: engine.world.bounds.max.y - engine.world.bounds.min.y,
 				alpha: 0.5
 			} )
 			.color( 'green' );

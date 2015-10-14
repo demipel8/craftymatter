@@ -23,7 +23,7 @@ Crafty.extend( {
 						}
 					},
 					world: {
-						bounds: {
+						bounds: _arg.bounds || {
 							min: { x: 0, y: 0},
 							max: { x: Crafty.viewport.width, y: Crafty.viewport.height }
 						}
