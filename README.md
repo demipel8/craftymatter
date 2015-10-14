@@ -20,6 +20,7 @@ npm install craftyjs matter-js crafty-matter
     "matter-js": "matter-js/build/matter.js"
   }
 }
+```
 
 **temporary fix** : Do to working with the edge build version of matter I had to make a couple fixes. So the 
 recommended matter lib version is on the `libs` folder.
