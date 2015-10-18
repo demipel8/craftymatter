@@ -2,7 +2,10 @@
  * Crafty wrapper fot MatterJS
  * @author  DEMI - Alvaro Martinez de Miguel
  */
-(function(Matter){
+
+var Matter = require('matter-js');
+
+(function() {
 	'use strict';
 
 	var engine;
@@ -32,4 +35,4 @@
 	include "debug.js"
 	/* jshint ignore:end */
 
-})(Matter);
+})();
