@@ -30,6 +30,8 @@ Crafty.extend( {
 					}
 				} );
 
+				runner = Runner.create();
+
 				if ( !!_arg ) {
 
 					if ( !!_arg.debug ) {
@@ -56,13 +58,12 @@ Crafty.extend( {
 
 				//Update engine every frame
 				Crafty.bind( 'EnterFrame', function( data ) {
-
-					//Custom Engine.Run function
-					Engine.run( engine, data );
+					Runner.tick(runner, engine, data.dt);
 				} );
 
 				this.engine = engine;
 				this.world = engine.world;
+				this.runner = runner;
 			},
 
 			destroy: function() {},

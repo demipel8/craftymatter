@@ -8,7 +8,7 @@ var Matter = require('matter-js');
 (function() {
 	'use strict';
 
-	var engine;
+	var engine, runner;
 
 	//Matter variables
 	var Bodies		= Matter.Bodies;
@@ -19,6 +19,7 @@ var Matter = require('matter-js');
 	var Engine 		= Matter.Engine;
 	var Events 		= Matter.Events;
 	var Mouse 		= Matter.Mouse;
+	var Runner 		= Matter.Runner;
 	var Vector 		= Matter.Vector;
 	var World 		= Matter.World;
 
@@ -28,7 +29,6 @@ var Matter = require('matter-js');
 	var RenderingMode = '2D, Canvas';
 
 	/* jshint ignore:start */
-	include "engine.js"
 	include "renderer.js"
 	include "namespaceExtension.js"
 	include "component.js"
