@@ -49,8 +49,13 @@ Crafty.extend( {
 						};
 					}
 
-					if ( !!_arg.renderingMode && _arg.renderingMode === 'Canvas' ) {
-						RenderingMode = '2D, Canvas';
+					if ( !!_arg.renderingMode ) {
+						if ( _arg.renderingMode === 'Canvas' ) {
+							RenderingMode = '2D, Canvas';
+						}
+						else if ( _arg.renderingMode === 'WebGL' ) {
+							RenderingMode = '2D, WebGL';
+						}
 					}
 				}
 

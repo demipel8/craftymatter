@@ -26,7 +26,7 @@ var Matter = require('matter-js');
 	var debug = generateDebug( false );
 
 	var entities = [];
-	var RenderingMode = '2D, Canvas';
+	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
 	include "renderer.js"

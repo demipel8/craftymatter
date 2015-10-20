@@ -26,7 +26,7 @@ var Matter = require('matter-js');
 	var debug = generateDebug( false );
 
 	var entities = [];
-	var RenderingMode = '2D, Canvas';
+	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
 	/**
@@ -487,8 +487,13 @@ var Matter = require('matter-js');
 							};
 						}
 
-						if ( !!_arg.renderingMode && _arg.renderingMode === 'Canvas' ) {
-							RenderingMode = '2D, Canvas';
+						if ( !!_arg.renderingMode ) {
+							if ( _arg.renderingMode === 'Canvas' ) {
+								RenderingMode = '2D, Canvas';
+							}
+							else if ( _arg.renderingMode === 'WebGL' ) {
+								RenderingMode = '2D, WebGL';
+							}
 						}
 					}
 
