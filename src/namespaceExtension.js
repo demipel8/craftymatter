@@ -61,6 +61,8 @@ Crafty.extend( {
 
 				debug.worldDebug();
 
+				event.propagateEvents();
+
 				//Update engine every frame
 				Crafty.bind( 'EnterFrame', function( data ) {
 					Runner.tick(runner, engine, data.dt);

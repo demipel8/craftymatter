@@ -33,6 +33,7 @@ var Matter = require('matter-js');
 	include "namespaceExtension.js"
 	include "component.js"
 	include "debug.js"
+	include "event.js"
 	/* jshint ignore:end */
 
 })();
