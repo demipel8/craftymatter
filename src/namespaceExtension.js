@@ -23,12 +23,14 @@ Crafty.extend( {
 						}
 					},
 					world: {
-						bounds: {
+						bounds: _arg.bounds || {
 							min: { x: 0, y: 0},
 							max: { x: Crafty.viewport.width, y: Crafty.viewport.height }
 						}
 					}
 				} );
+
+				runner = Runner.create();
 
 				if ( !!_arg ) {
 
@@ -47,22 +49,28 @@ Crafty.extend( {
 						};
 					}
 
-					if ( !!_arg.renderingMode && _arg.renderingMode === 'Canvas' ) {
-						RenderingMode = '2D, Canvas';
+					if ( !!_arg.renderingMode ) {
+						if ( _arg.renderingMode === 'Canvas' ) {
+							RenderingMode = '2D, Canvas';
+						}
+						else if ( _arg.renderingMode === 'WebGL' ) {
+							RenderingMode = '2D, WebGL';
+						}
 					}
 				}
 
 				debug.worldDebug();
 
+				event.propagateEvents();
+
 				//Update engine every frame
 				Crafty.bind( 'EnterFrame', function( data ) {
-
-					//Custom Engine.Run function
-					Engine.run( engine, data );
+					Runner.tick(runner, engine, data.dt);
 				} );
 
 				this.engine = engine;
 				this.world = engine.world;
+				this.runner = runner;
 			},
 
 			destroy: function() {},

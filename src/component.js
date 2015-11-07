@@ -21,6 +21,8 @@ Crafty.c( 'Matter', ( function() {
 			options = attr.matter;
 		}
 
+		Common.extend(options, this._matter, true);
+
 		if ( !!options.shape && options.shape === 'circle' ) {
 			var radius = coords.w / 2;
 
@@ -52,6 +54,7 @@ Crafty.c( 'Matter', ( function() {
     return {
 
 		init: function() {
+			this._matter = {};
 
 			this.requires( '2D' );
 
@@ -96,7 +99,13 @@ Crafty.c( 'Matter', ( function() {
 			if ( typeof this._debugBody !== 'undefined' ) {
 				this._debugBody.destroy();
 			}
-	    }
+	    },
+
+    	matter: function (options) {
+    		Common.extend(this._matter, options, true);
+
+    		return this;
+    	}
 	};
 
 } ) () );
