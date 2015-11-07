@@ -12,6 +12,16 @@ Install the required packages:
 npm install craftyjs matter-js crafty-matter
 ```
 
+**browserify tip** : If you are relying on main field for your project while using browserify, you need to add the snippet below in your package.json to overwrite build used.
+
+```js
+{
+  "browser": {
+    "matter-js": "matter-js/build/matter.js"
+  }
+}
+```
+
 **temporary fix** : Do to working with the edge build version of matter I had to make a couple fixes. So the 
 recommended matter lib version is on the `libs` folder.
 

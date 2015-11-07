@@ -2,10 +2,13 @@
  * Crafty wrapper fot MatterJS
  * @author  DEMI - Alvaro Martinez de Miguel
  */
-(function(Matter){
+
+var Matter = require('matter-js');
+
+(function() {
 	'use strict';
 
-	var engine;
+	var engine, runner;
 
 	//Matter variables
 	var Bodies		= Matter.Bodies;
@@ -16,6 +19,7 @@
 	var Engine 		= Matter.Engine;
 	var Events 		= Matter.Events;
 	var Mouse 		= Matter.Mouse;
+	var Runner 		= Matter.Runner;
 	var Vector 		= Matter.Vector;
 	var World 		= Matter.World;
 
@@ -25,11 +29,11 @@
 	var RenderingMode = '2D, DOM';
 
 	/* jshint ignore:start */
-	include "engine.js"
 	include "renderer.js"
 	include "namespaceExtension.js"
 	include "component.js"
 	include "debug.js"
+	include "event.js"
 	/* jshint ignore:end */
 
-})(Matter);
+})();
