@@ -1,31 +1,39 @@
 /**
  * Matter component, creates the bodies in the Matter world and links the to its entities.
- * 
  */
-Crafty.c('Matter', (function() {
+Crafty.c( 'Matter', ( function() {
 
 	var _newBody = function _newBody( attr ) {
 
-		this.origin( ( attr.w / 2 ), ( attr.h / 2 ) );
+        var coords = {
+            x: attr.x || 0,
+            y: attr.y || 0,
+            w: attr.w || 0,
+            h: attr.h || 0
+        };
 
-		entities.push(this);
+		this.origin( ( coords.w / 2 ), ( coords.h / 2 ) );
+
+		entities.push( this );
 
 		var options = {};
-		if( !!attr.matter ) {
+		if ( !!attr.matter ) {
 			options = attr.matter;
 		}
 
-		if(!!options.shape && options.shape === 'circle' ) {
-			var radius = attr.w / 2;
+		if ( !!options.shape && options.shape === 'circle' ) {
+			var radius = coords.w / 2;
 
-			if( !!attr.matter.radius ) {
+			if ( !!attr.matter.radius ) {
 				radius = attr.matter.radius;
 			}
 
-			this._body = Bodies.circle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), radius, options );
+			this._body = Bodies.circle( coords.x + ( coords.w / 2 ), coords.y + ( coords.h / 2 ), radius, options );
 
 		} else {
-			this._body = Bodies.rectangle( attr.x + ( attr.w / 2 ), attr.y + ( attr.h / 2 ), attr.w, attr.h, options );
+
+			this._body = Bodies.rectangle( coords.x + ( coords.w / 2 ), coords.y + ( coords.h / 2 ), coords.w, coords.h,
+				options );
 		}
 
 		this._body.entity = this;
@@ -34,10 +42,8 @@ Crafty.c('Matter', (function() {
 
 		this._debugBody = debug.generateDebugBody( this._body );
 
-
 		if ( !!attr.rotation ) {
 			Body.setAngle( this._body, Crafty.math.degToRad( attr.rotation ) );
-			//this.matterMoved = true;
 		}
 
 		World.addBody( engine.world, this._body );
@@ -45,55 +51,52 @@ Crafty.c('Matter', (function() {
 
     return {
 
-		init: function () {
+		init: function() {
 
 			this.requires( '2D' );
 
-			this.bind('Change', function(attr) {
+			this.bind( 'Change', function( attr ) {
 				if ( !attr ) {
 					return;
 				}
-				if ( attr.hasOwnProperty('x') && attr.hasOwnProperty('y') ) {
-					return _newBody.call(this, attr);
+				if ( attr.hasOwnProperty( 'x' ) && attr.hasOwnProperty( 'y' ) ) {
+					return _newBody.call( this, attr );
 				}
-			}.bind(this));
+			}.bind( this ) );
 
-			this.bind('Move', function( oldAttr ) {
+			this.bind( 'Move', function( ) {
 
-				if( !this.matterMoved && typeof this._body !== 'undefined' ) {
-					Body.setPosition (this._body, {
+				if ( !this.matterMoved && typeof this._body !== 'undefined' ) {
+					Body.setPosition ( this._body, {
 						x: this._x + this._w / 2,
 						y: this._y + this._h / 2
-					});
+					} );
 
 				} else {
 					this.matterMoved = false;
 				}
-				
 
-			}.bind(this));
+			}.bind( this ) );
 
-			this.bind('Rotate', function( rotation ) {
+			this.bind( 'Rotate', function( ) {
 
-				if( !this.matterMoved ) {
+				if ( !this.matterMoved ) {
 
-					Body.setAngle (this._body, Crafty.math.degToRad( this.rotation ) );
+					Body.setAngle ( this._body, Crafty.math.degToRad( this.rotation ) );
 
 				} else {
 					this.matterMoved = false;
 				}
-				
-
-			}.bind(this));
+			}.bind( this ) );
 		},
 
-		remove: function ( entityDestroyed ) {
+		remove: function( ) {
 	        World.remove( engine.world, this._body, true );
 
-			if( typeof this._debugBody !== "undefined" ) {
+			if ( typeof this._debugBody !== 'undefined' ) {
 				this._debugBody.destroy();
 			}
 	    }
 	};
 
-})());
+} ) () );

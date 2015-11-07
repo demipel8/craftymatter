@@ -1,61 +1,54 @@
 Crafty.c('Player', {
 
-	init: function() {
-		this.requires( 'Actor,  SpriteAnimation, PlayerSprite, Matter, Twoway, Keyboard' );
+    init: function() {
+        this.requires( 'Actor, SpriteAnimation, PlayerSprite, Matter, Multiway, Keyboard' );
 
-		this.reel('PlayerMoving', 500, 1, 0, 4)
-		this.sprite( 1, 0 );
-		this.twoway( 10 );
-		this.flying = false;
+        this.attr({  // for the moment it requires of all the four pos parameters
+            x : 0,
+            y : 470,
+            w : 100,
+            h : 130,
+            z :2,
+            matter : {
+                friction : 0,
+                density : 0.5,
+                label : 'player'
+            }
+        });
 
-		this.attr({
-			x : 100,
-			y : 470,
-			w : 100,
-			h : 130,
-			matter : {
-				friction : 0
-			}
-		})
+        this.base = Crafty.e( 'Actor, Color' )
+            .attr({
+                x : 0,
+                y : 580,
+                w : 100,
+                h : 20,
+                z : 2
+            });
 
-		this.bind('KeyDown', function () { 
-			if ( this.isDown('LEFT_ARROW') || this.isDown('RIGHT_ARROW') ) {
-				this.animate('PlayerMoving', -1); 
-			}
+        this.attach( this.base );
+        this.z = this._z + 1;
 
-			if( this.isDown('UP_ARROW') && !this.flying) {
-				this.flying = true;
+        this._body.label = 'player';
+    },
 
-				Matter.Body.applyForce ( this._body,  
-					{
-						x : 0,
-						y : 0 
-					},
-					{ 
-						x : 0, 
-						y : - 0.5
-					}
-				);
-			}
-		}.bind( this ));
+    controls : function ( left , right, jump ) {
+        var controlsObject = {};
+        controlsObject[ left ] = 180;
+        controlsObject[ right ] = 0;
+        controlsObject[ jump ] = 270;
 
-		this.bind('KeyUp', function () { 
-			this.pauseAnimation();
-		}.bind( this ));
-		//this.animate('PlayerMoving', -1);
-		
-		this._body.label = 'player';
+        this.multiway( 15, controlsObject );
+        return this;
 
-		Matter.Events.on(Crafty.Matter.engine, 'collisionStart', function(event) { 
-	        var pairs = event.pairs;
+    },
 
-	        for (var i = 0; i < pairs.length; i++) {
-	            var labels = pairs[i].bodyA.label + ' : ' + pairs[i].bodyB.label;
+    team : function ( color ) {
+        this.base.color( color );
+        return this;
+    },
 
-	            if( ~labels.indexOf('player') && ~labels.indexOf('floor') ){
-	            	this.flying = false;
-	            }
-	        }
-	    }.bind( this) );
-	}
-})
+    audio : function ( audio ) {
+        this.audio = audio;
+        return this;
+    }
+});

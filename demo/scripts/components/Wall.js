@@ -3,9 +3,9 @@ Crafty.c('Wall', {
 		this.requires( 'Actor, Matter');
 
 		this.attr({
-			x: -10,
+			x: -30,
 			y: - Crafty.viewport.height,
-			w: 10,
+			w: 30,
 			h: Crafty.viewport.height * 2,
 			matter: {
 				isStatic: true

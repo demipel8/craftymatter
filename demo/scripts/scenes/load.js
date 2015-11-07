@@ -4,9 +4,12 @@ Crafty.scene('load', function() {
 
 	var assetsObj = {
 		"audio": {
-			"audioThug" : ["audioThug.mp3"]
+            "player0" : ["player-0.mp3"],
+            "player1" : ["player-1.mp3"],
+            "player2" : ["player-2.mp3"],
+            "player3" : ["player-3.mp3"]
 		},
-		"images": ['background.jpg', 'ghost.png', 'ball.png', 'net.jpg', 'glasses.png', 'joint.png', 'hat.png'],
+		"images": ['background.jpg', 'portero.png', 'ball.png' ],
 		"sprites": {
 		}
 	};
@@ -14,31 +17,19 @@ Crafty.scene('load', function() {
 	Crafty.load(assetsObj, // preload assets
 	    function() { //when loaded
 
-	    	Crafty.sprite(100, 130 , "assets/ghost.png", {
+			Crafty.sprite(960, 640 , "assets/background.jpg", {
+                background: [0,0]
+			});
+
+	    	Crafty.sprite(200, 200 , "assets/portero.png", {
 			    PlayerSprite: [0,0]
 			});
 
-			Crafty.sprite(99, 96 , "assets/ball.png", {
+			Crafty.sprite(100, 100 , "assets/ball.png", {
 			    BallSprite: [0,0]
 			});
 
-			Crafty.sprite(191, 200 , "assets/net.jpg", {
-			    NetSprite: [0,0]
-			});
-
-			Crafty.sprite(400, 80 , "assets/glasses.png", {
-			    GlassesSprite: [0,0]
-			});
-
-			Crafty.sprite(400, 117 , "assets/joint.png", {
-			    JointSprite: [0,0]
-			});
-
-			Crafty.sprite(539, 338 , "assets/hat.png", {
-			    HatSprite: [0,0]
-			});
-
-	        Crafty.scene("play"); //go to main scene
+	        Crafty.scene("menu"); //go to main scene
 	    },
 
 	    function(e) { //progress
