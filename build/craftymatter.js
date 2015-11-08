@@ -3,7 +3,7 @@
  * @author  DEMI - Alvaro Martinez de Miguel
  */
 
-var Matter = require('matter-js');
+var Matter = ( typeof require !== 'undefined' ) ? require('matter-js') : window.Matter;
 
 (function() {
 	'use strict';
